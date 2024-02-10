@@ -1,0 +1,10 @@
+.modal-window-main {
+    display: flex;
+    z-index: 999;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 1px solid red;
+    width: 300px;
+    flex-direction: column;
+}

@@ -1,0 +1,19 @@
+.disk-main {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid green; */
+  width: auto;
+  height: 90vh;   
+  margin: 2px;
+  padding: 5px;
+  
+}
+
+.disk-button-back {
+  width: 150px;
+}
+
+.disk-folders {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,9 @@
+.down-panel-main {
+    display: flex;
+    width: 100%;
+    background-color:antiquewhite;
+}
+
+.down-panel-item {
+    margin-right: 10px;
+}

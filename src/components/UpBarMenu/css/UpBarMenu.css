@@ -1,0 +1,15 @@
+.upbarmenu-main {
+    display: flex;
+    /* border: 1px solid darkred; */
+    margin: 2px;
+    width: auto;
+    justify-content: flex-end;
+    height: 3vh;
+  }
+
+.share-link-window {
+  display: flex;
+  position: absolute;
+  z-index: 999;
+  background-color: bisque;
+}

@@ -1,0 +1,8 @@
+.user-main {
+  display: flex;
+  /* border: 1px solid blue; */
+  margin: 2px;
+  width: auto;
+  justify-content: flex-end;
+  height: 3vh;
+}

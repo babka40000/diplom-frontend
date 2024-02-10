@@ -1,0 +1,10 @@
+.left-menu-main {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+  width: 200px;
+  height: 98vh;
+  margin: 2px;
+  padding: 5px;
+  background-color:antiquewhite;  
+}

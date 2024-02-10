@@ -1,0 +1,23 @@
+.file-img {
+    width:70px;
+}
+
+.file-descr {
+    display: flex;
+    font-size: 12px;
+    width: 70px;
+    justify-content: center;
+}
+
+.main-file {
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+    margin-left: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.main-file-activ {
+    background-color:lightgray;
+}

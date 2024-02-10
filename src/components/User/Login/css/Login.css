@@ -1,0 +1,30 @@
+.login-main {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    z-index: 999;
+    top: 400px; left: 600px;
+    border-radius: 5px;
+    background-color:lemonchiffon;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.login-login {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex {
+    display: flex;
+}

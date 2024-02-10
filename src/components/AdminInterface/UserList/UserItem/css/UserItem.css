@@ -1,0 +1,29 @@
+.user-item-main {
+    display: flex;
+}
+
+.user-item-username {
+    width:100px;
+}
+
+.user-item-name {
+    width: 200px;
+}
+
+.user-item-isadmin {
+    width: 150px;
+}
+
+.user-item-redo-button {
+    width: 250px;
+    margin-right: 20px;
+}
+
+.user-item-delete-button {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.user-item-goto-button  {
+    width: 150px;
+}

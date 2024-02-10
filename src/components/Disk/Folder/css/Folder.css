@@ -1,0 +1,23 @@
+.folder-img {
+    width:70px;
+}
+
+.folder-descr {
+    display: flex;
+    font-size: 12px;
+    width: 70px;
+    justify-content: center;
+}
+
+.main-folder {
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+    margin-left: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.main-folder-activ {
+    background-color:lightgray;
+}
