@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import Folder from './Folder/Folder'
 import { useSelector, useDispatch } from 'react-redux'
 import File from './File/File'
-import { getFetchData } from '../Lib/fetch'
+import { getFetchData } from '../../Lib/fetch'
 
 
 // Компонента для отображение списка файлов и папок

@@ -2,7 +2,7 @@ import React from 'react'
 import './css/UpBarMenuPoint.css'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getFetchData } from '../../Lib/fetch';
+import { getFetchData } from '../../../Lib/fetch';
 
 // Компонента - пункт в верхнем меню
 const UpBarMenuItem = props => {

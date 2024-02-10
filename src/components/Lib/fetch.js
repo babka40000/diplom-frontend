@@ -23,7 +23,7 @@ export const getFetchData = async (path, method, requestData = '') => {
     return params;
   }
 
-  const response = await fetch('http://localhost:8000/' + path, getFetchParam());
+  const response = await fetch(process.env.REACT_APP_API_URL + path, getFetchParam());
 
   let data = {};
 

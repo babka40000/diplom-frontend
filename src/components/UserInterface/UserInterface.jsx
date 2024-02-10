@@ -1,9 +1,9 @@
 import React from 'react'
 import './css/UserInterface.css'
-import LeftBarMenu from '../LeftBarMenu/LeftBarMenu'
-import Disk from '../Disk/Disk';
-import User from '../User/User';
-import UpBarMenu from '../UpBarMenu/UpBarMenu';
+import LeftBarMenu from './LeftBarMenu/LeftBarMenu'
+import Disk from './Disk/Disk';
+import User from './User/User';
+import UpBarMenu from './UpBarMenu/UpBarMenu';
 import DownloadFileLink from './DownloadFileLink/DownloadFileLink';
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom';

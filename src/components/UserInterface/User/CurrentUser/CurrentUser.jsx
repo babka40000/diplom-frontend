@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import './css/CurrentUser.css'
-import { getFetchData } from '../../Lib/fetch'
+import { getFetchData } from '../../../Lib/fetch'
 
 // Компонента отобрашает пользователя вошедшего в систему
 const CurrentUser = () => {

@@ -3,7 +3,7 @@ import './css/LeftBarMenu.css'
 import LeftBarMenuItem from './LeftBarMenuItem/LeftBarMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import UploadFile from './UploadFile/UploadFile';
-import { getFetchData } from '../Lib/fetch';
+import { getFetchData } from '../../Lib/fetch'
 
 // Компонента левого меню пользовательского интерфейса
 const LeftBarMenu = () => {

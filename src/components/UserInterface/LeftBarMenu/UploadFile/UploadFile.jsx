@@ -37,7 +37,7 @@ const UploadFile = () => {
       return params;
     }
 
-    return await fetch('http://localhost:8000/' + path,
+    return await fetch(process.env.REACT_APP_API_URL + path,
       getFetchParam()
     )
   }

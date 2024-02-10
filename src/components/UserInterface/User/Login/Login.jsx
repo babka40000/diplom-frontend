@@ -1,7 +1,7 @@
 import './css/Login.css'
 import { useDispatch } from 'react-redux';
 import { useState } from 'react'
-import { getFetchData } from '../../Lib/fetch';
+import { getFetchData } from '../../../Lib/fetch';
 
 // Компонента - окно для логина в систему
 const Login = props => {

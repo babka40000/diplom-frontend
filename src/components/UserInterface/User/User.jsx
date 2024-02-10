@@ -5,7 +5,7 @@ import Anonym from './Anonym/Anonym'
 import CurrentUser from './CurrentUser/CurrentUser'
 import { useSelector, useDispatch } from 'react-redux'
 import Registration from './Registration/Registration'
-import { getFetchData } from '../Lib/fetch'
+import { getFetchData } from '../../Lib/fetch'
 
 // Компонента, объединяющая все компоненты работы с пользователем
 // Такие как регистрация, войти в систему, выйти из системы итд

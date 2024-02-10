@@ -1,8 +1,8 @@
 import React from 'react'
 import './css/RegistrationForm.css'
-import { getFetchData } from '../../../Lib/fetch'
+import { getFetchData } from '../../../../Lib/fetch'
 import { useState } from 'react'
-import ModalWindow from '../../../ModalWindow/ModalWindow'
+import ModalWindow from '../../../../ModalWindow/ModalWindow'
 
 // Компонента - форма для регистрации
 const RegistrationForm = props => {

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import fileDownload from 'js-file-download'
-import { getFetchData } from '../Lib/fetch';
+import { getFetchData } from '../../Lib/fetch'
 
 // Функция делает случайную комбинацию из латинских букв
 function makeid(length) {
@@ -175,10 +175,8 @@ const UpBarMenu = () => {
 
         const { response } = await getFetchData(path, 'PUT', { name: fileOrFolder.name, is_folder: fileOrFolder.is_folder, link: idLink });
 
-        console.log(response);
-
         if (response.ok) {
-          setDownloadLink('http://localhost:3000/' + idLink);
+          setDownloadLink(process.env.REACT_APP_LINK_URL + idLink);
           setDownloadLinkActive(true);
         }
       }
