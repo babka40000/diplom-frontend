@@ -1,4 +1,60 @@
-# Getting Started with Create React App
+# Инструкция по развертыванию фронтенда
+
+Примеры в инструкции будут написаны для Ubuntu, предустановленную на платформе reg.ru. Но, по образу и подобию вы можете развернуть данный продукт на других линуксоподобных ОС.
+
+## Установка программного обеспечения
+
+Нужно установить следующие компоненты:
+1. Менеджер пакетов npm
+2. NodeJS
+3. Git
+4. Nginx
+
+### `Пример
+
+server {
+  listen 80;
+  server_name 89.104.68.233;
+
+  location / {
+    root  /home/frontend/diplom-frontend/build;
+  }
+}
+
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs
+
+sudo apt autoremove
+
+ln -s /etc/nginx/sites-available/megadisk_frontend /etc/nginx/sites-enabled/
+
+ ufw allow 'Nginx Full'
+ 
+ apt update
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
