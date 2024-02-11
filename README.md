@@ -1,17 +1,122 @@
-# Инструкция по развертыванию фронтенда
+# Инструкция по развертыванию фронтенда для приложения хранения файлов Megadisk
 
-Примеры в инструкции будут написаны для Ubuntu, предустановленную на платформе reg.ru. Но, по образу и подобию вы можете развернуть данный продукт на других линуксоподобных ОС.
+Примеры в инструкции будут написаны для Ubuntu, предустановленную на платформе reg.ru. Но, по образу и подобию, вы можете развернуть данный продукт на других линуксоподобных ОС.
 
-## Установка программного обеспечения
+## Обновление информации о пакетах ОС
 
-Нужно установить следующие компоненты:
-1. Менеджер пакетов npm
-2. NodeJS
-3. Git
-4. Nginx
+Перед установкой программного обеспечени необходимо обновить информацию о пакетах операционной системы, чтобы установить актуальные версии программ
 
-### `Пример
+#### Пример для Ubuntu v22 reg.ru
 
+Если вы ставите фронтенд на тот же сервер, где уже стоит бекенд, операцию можно пропустить
+
+```
+apt update
+``` 
+
+## Установка программ
+
+Для работы бекенда нужно установить следующее ПО:
+1. Git
+2. Npm
+3. Nginx
+
+#### Пример для Ubuntu v22 reg.ru
+
+На данной операционной системе уже установлен Git нормальной версии
+
+Если вы ставите фронтенд на тот же сервер, где уже стоит бекенд, установку nginx можно пропустить
+
+Устанавливаем остальное ПО
+
+```
+apt install npm nginx
+```
+
+Тут возникает проблема. Возможно на других ОС ее нет. Вместе с npm ставится NodeJS 12-ой версии. А нам нужна минимум 18-я.
+
+Удаляем NodeJS
+
+```
+apt remove nodejs
+```
+
+Чистим ненужные пакеты
+
+```
+apt autoremove
+```
+
+Ставим 18-ю версию с сайта
+
+```
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs
+```
+
+## Создаем папку для проекта
+
+Нужно создать папку для проекта и перейти в нее
+
+#### Пример для Ubuntu v22 reg.ru
+
+```
+mkdir /home/frontend
+cd /home/frontend/
+```
+
+## Скачиваем бекенд из репозитория и переходим в папку проекта
+
+Скачиваем код бекенда с github.com. После скачивания необходимо перейти в папку проекта
+
+#### Пример для Ubuntu v22 reg.ru
+
+```
+git clone https://github.com/babka40000/diplom-frontend.git
+cd diplom-frontend
+```
+
+## Устанавливаем зависимости
+
+Нужно переустановить все нужные модули nodejs
+
+```
+npm install
+```
+
+## Прописываем переменные окружения
+
+
+Нам нужно создать файл .env и прописать переменные окружения для текущего сервера. В папке лежит файл .env.example, в котором прописаны все поля со сначеними для примера. Нужно скопировать этот файл в .env и изменить значения в нем на нужные нам.
+
+```
+cp .env.example .env
+nano .env
+```
+
+После редактировани параметров сохраняемся и выходим из редактора.
+
+## Сборка проекта
+
+Собираем проект с помощью команды build
+
+```
+npm run build
+```
+
+## Настройка nginx
+
+nginx - веб сервер, который обрабатывает запросы вашего браузера. Потом он их должен по цепочке отправлять в gunicorn. Также нужно указать веб-серверу папку со статикой.
+
+Делаем файл с настройками и открываем его в редакторе
+
+```
+touch /etc/nginx/sites-available/megadisk_frontend
+nano /etc/nginx/sites-available/megadisk_frontend
+```
+
+Копируем в файл следующую конфигурацию:
+
+```
 server {
   listen 80;
   server_name 89.104.68.233;
@@ -20,107 +125,26 @@ server {
     root  /home/frontend/diplom-frontend/build;
   }
 }
+```
 
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs
+Сохраняемся и выходим
 
-sudo apt autoremove
+Включаем нашу настройку в конфигурацию nginx
 
+```
 ln -s /etc/nginx/sites-available/megadisk_frontend /etc/nginx/sites-enabled/
+```
 
- ufw allow 'Nginx Full'
- 
- apt update
+Перезапускаем nginx
 
+```
+service nginx restart
+```
 
+Открываем порты фаервола для nginx
 
+```
+ufw allow 'Nginx Full'
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+На этом настройка фронтенда завершена.
