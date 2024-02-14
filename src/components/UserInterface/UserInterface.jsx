@@ -18,6 +18,13 @@ const UserInterface = () => {
 
   const location = useLocation();
 
+  function getParam(name, location) {
+    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+  }
+
+  const linkParam = getParam('link', location); 
+
   // Функция проверяет, есль ли в данный момент выделенная папка или файл
   const isActiveFileOrFolder = () => {
     for (const fileOrFolder of filesAndFolders) {
@@ -42,7 +49,7 @@ const UserInterface = () => {
         </div>
         <Disk />
         {isActiveFileOrFolder() && <DownPanel />}
-        <DownloadFileLink link={location} />
+        <DownloadFileLink link={linkParam} />
       </div>
     </div>
   )

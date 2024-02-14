@@ -41,9 +41,9 @@ const DownloadFileLink = props => {
 
   // При создании компонента проверяет, передана ли дополнительная ссылка и запускает процедуру скачивания файла
   useEffect(() => {
-    const linkPath = props.link.pathname;
+    const linkPath = props.link;
 
-    if (linkPath !== '/') {
+    if (linkPath !== undefined) {
       downloadFile(linkPath);
     }
   }, []);

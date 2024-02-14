@@ -176,7 +176,7 @@ const UpBarMenu = () => {
         const { response } = await getFetchData(path, 'PUT', { name: fileOrFolder.name, is_folder: fileOrFolder.is_folder, link: idLink });
 
         if (response.ok) {
-          setDownloadLink(process.env.REACT_APP_LINK_URL + idLink);
+          setDownloadLink(process.env.REACT_APP_LINK_URL + '?link=' + idLink);
           setDownloadLinkActive(true);
         }
       }
