@@ -33,7 +33,9 @@ const Disk = () => {
 
   // При создании компонента получаем список файлов и папок, сортируем их и передаем в reducer
   useEffect(() => {
-    getFilesAndFoldersFromServer('api/v1/filesandfolders/');
+    if (!diskMode.active) {
+      getFilesAndFoldersFromServer('api/v1/filesandfolders/');
+    }
   }, []);
 
   // Получаем новые список файлов и папок с сервера только когда нам нужно

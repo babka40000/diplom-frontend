@@ -113,18 +113,19 @@ const UpBarMenu = () => {
   // А потом по ссылке скачиваем файл
   const downloadFile = async event => {
     event.preventDefault();
+
     for (const fileOrFolder of filesAndFolders) {
       if ('active' in fileOrFolder) {
         // С помощью запроса получаем ссылку на скачиваемый файл
         let path = '';
         if (fileOrFolder.parent === null) {
-          if (diskMode) {
+          if (diskMode.active) {
             path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id;
           } else {
             path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
           }
         } else {
-          if (diskMode) {
+          if (diskMode.active) {
             path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id + '&parent=' + fileOrFolder.parent;
           } else {
             path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
@@ -167,10 +168,19 @@ const UpBarMenu = () => {
     for (const fileOrFolder of filesAndFolders) {
       if ('active' in fileOrFolder) {
         let path = '';
+        
         if (fileOrFolder.parent === null) {
-          path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
+          }
         } else {
-          path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id + '&parent=' + fileOrFolder.parent;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
+          }
         }
 
         const { response } = await getFetchData(path, 'PUT', { name: fileOrFolder.name, is_folder: fileOrFolder.is_folder, link: idLink });
