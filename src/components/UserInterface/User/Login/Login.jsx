@@ -60,7 +60,7 @@ const Login = props => {
         </div>
         <div className='flex'>
           <label htmlFor="pass">Пароль</label>
-          <input className='pass' name='pass' type="text" id='pass' />
+          <input className='pass' name='pass' type="password" id='pass' />
         </div>
         <button className='flex' type="submit">Войти!</button>
         <button className='flex' onClick={cancelHandler}>Отмена</button>

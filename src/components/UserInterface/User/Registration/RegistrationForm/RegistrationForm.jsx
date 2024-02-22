@@ -17,7 +17,7 @@ const RegistrationForm = props => {
   }
 
   // Отправляем данные на создание нового пользователя
-  // GПеред отправкой делаем проверки. Если проверка не прошла, данные не отправляем
+  // Перед отправкой делаем проверки. Если проверка не прошла, данные не отправляем
   const submitHandler = async event => {
     event.preventDefault();
 
@@ -83,7 +83,7 @@ const RegistrationForm = props => {
         <label htmlFor="login">ЛОГИН: </label>
         <input type="text" name='login' className='login' id='login' />
         <label htmlFor="pass">ПАРОЛЬ: </label>
-        <input type="text" name='pass' className='pass' id='pass' />
+        <input type="password" name='pass' className='pass' id='pass' />
         <label htmlFor="name">ИМЯ: </label>
         <input type="text" name='name' className='name' id='name' />
         <label htmlFor="email">ПОЧТА: </label>

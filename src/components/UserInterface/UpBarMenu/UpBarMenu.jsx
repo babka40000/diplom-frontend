@@ -27,6 +27,7 @@ function makeid(length) {
 // Для файла кроме таких же двух пунктов добавляется "Скачать файл" и "Поделиться" 
 const UpBarMenu = () => {
   const [renameWindow, setRenameWindow] = useState(false);
+  const [renameComment, setRenameComment] = useState(false);
   const [downloadLinkActive, setDownloadLinkActive] = useState(false);
   const [downloadLink, setDownloadLink] = useState('');
 
@@ -53,20 +54,27 @@ const UpBarMenu = () => {
 
     for (const fileOrFolder of filesAndFolders) {
       if ('active' in fileOrFolder) {
+        let path = '';
+
         if (fileOrFolder.parent === null) {
-          const { response } = await getFetchData('api/v1/filesandfolders/' + fileOrFolder.id + '/', 'DELETE');
-          if (response.ok) {
-            dispatch({
-              type: 'DELETE_FILEORFOLDER',
-            })
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
           }
         } else {
-          const { response } = await getFetchData('api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent, 'DELETE');
-          if (response.ok) {
-            dispatch({
-              type: 'DELETE_FILEORFOLDER',
-            })
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id + '&parent=' + fileOrFolder.parent;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
           }
+        }
+
+        const { response } = await getFetchData(path, 'DELETE');
+        if (response.ok) {
+          dispatch({
+            type: 'DELETE_FILEORFOLDER',
+          })
         }
       }
     }
@@ -107,7 +115,7 @@ const UpBarMenu = () => {
       }
     }
   }
-  
+
   // Скачиваем выделенный файл
   // Сначала ищем ссылку на файл в БД по заданным параметрам
   // А потом по ссылке скачиваем файл
@@ -145,7 +153,7 @@ const UpBarMenu = () => {
           }
 
           const now = new Date();
-  
+
           await getFetchData(
             path,
             'PUT',
@@ -158,7 +166,7 @@ const UpBarMenu = () => {
       }
     }
   }
- 
+
   // Делимся ссылкой для скачивания
   // Для этого генерируем ссылку из 10 случайных символов и отправляем ее на сервер, чтобы "прикрепить" к файлу
   const shareFile = async event => {
@@ -168,7 +176,7 @@ const UpBarMenu = () => {
     for (const fileOrFolder of filesAndFolders) {
       if ('active' in fileOrFolder) {
         let path = '';
-        
+
         if (fileOrFolder.parent === null) {
           if (diskMode.active) {
             path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id;
@@ -193,16 +201,80 @@ const UpBarMenu = () => {
     }
   }
 
+  // При нажатии на кнопку "Редактировать комментарий"
+  const redoComment = event => {
+    event.preventDefault();
+    setRenameComment(true);
+  }
+
+  // Редактируем комментарий
+  const submitRedoComment = async event => {
+    event.preventDefault();
+
+    for (const fileOrFolder of filesAndFolders) {
+      if ('active' in fileOrFolder) {
+        let path = '';
+
+        if (fileOrFolder.parent === null) {
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
+          }
+        } else {
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id + '&parent=' + fileOrFolder.parent;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
+          }
+        }
+
+        const { response } = await getFetchData(
+          path,
+          'PUT',
+          {
+            name: fileOrFolder.name,
+            is_folder: fileOrFolder.is_folder,
+            remark: event.target.newComment.value,
+          });
+
+        if (response.ok) {
+          dispatch({
+            type: 'SET_REFRESHFILESANDFOLDERS_VALUE',
+            payload: {
+              refresh: true,
+            }
+          })
+        }
+      }
+    }
+
+    setRenameComment(false);
+  }
+
+  // Отмена редактирования комментария
+  const cancelRedoComment = () => {
+    setRenameComment(false);
+  }
+
   return (
     <div className='upbarmenu-main'>
-      {!diskMode.active && <UpBarMenuItem name='Переименовать' onClickHandler={renameFileOrFolder} action={renameWindow} destroyRenameWindow={destroyRenameWindow} />}
-      {!diskMode.active && <UpBarMenuItem name='Удалить' onClickHandler={deleteFileOrFolder} />}
+      <UpBarMenuItem name='Переименовать' onClickHandler={renameFileOrFolder} action={renameWindow} destroyRenameWindow={destroyRenameWindow} />
+      <UpBarMenuItem name='Удалить' onClickHandler={deleteFileOrFolder} />
       {isActiveElementFile() ? <UpBarMenuItem name='Скачать файл' onClickHandler={downloadFile} /> : ''}
       {isActiveElementFile() ? <UpBarMenuItem name='Поделиться' onClickHandler={shareFile} /> : ''}
+      {isActiveElementFile() ? <UpBarMenuItem name='Редактировать комментарий' onClickHandler={redoComment} /> : ''}
       {downloadLinkActive ?
         <div className='share-link-window'>
           <p>Поделиться ссылкой на скачивание: {downloadLink}</p>
         </div> : ''}
+      {renameComment &&
+        <form onSubmit={submitRedoComment} className='share-link-window'>
+          <label htmlFor='newName'>Новый комментарий:</label>
+          <input type='text' name='newComment' />
+          <button type='submit'>ОК</button>
+          <button type="button" onClick={cancelRedoComment}>Отмена</button>
+        </form>}
     </div >
   )
 }

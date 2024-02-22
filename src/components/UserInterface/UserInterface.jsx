@@ -14,7 +14,6 @@ import DownPanel from './DownPanel/DownPanel';
 const UserInterface = () => {
   const filesAndFolders = useSelector(state => state.filesAndFolders);
   const currentUser = useSelector(state => state.isLogin)
-  const diskMode = useSelector(state => state.diskMode)
 
   const location = useLocation();
 
@@ -37,7 +36,7 @@ const UserInterface = () => {
 
   return (
     <div className='app-main'>
-      {currentUser.isLogin && !diskMode.active ? <LeftBarMenu /> : ''}
+      {currentUser.isLogin && <LeftBarMenu />}
       <div className='app-right'>
         <div className='app-top'>
           <div className='app-up-bar-menu'>

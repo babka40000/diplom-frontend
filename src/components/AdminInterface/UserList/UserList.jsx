@@ -171,7 +171,7 @@ const UserList = () => {
           <label htmlFor="name">Имя пользователя</label>
           <input type="text" name='name' id='name' />
           <label htmlFor="password">Пароль</label>
-          <input type="text" name='password' id='password' />
+          <input type="password" name='password' id='password' />
           <label htmlFor="email">e-mail</label>
           <input type="text" name='email' id='email' />
           <input type="checkbox" name='isadmin' id='isadmin' />

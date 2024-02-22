@@ -10,6 +10,9 @@ const LeftBarMenu = () => {
   const dispatch = useDispatch();
 
   const parent = useSelector(state => state.parent);
+  const currentUser = useSelector(state => state.isLogin);
+  const diskMode = useSelector(state => state.diskMode)
+
 
   // Создаем новую папку с именем "Новая папка"
   const createNewFolderHandler = async event => {
@@ -17,13 +20,22 @@ const LeftBarMenu = () => {
 
     const lastParent = parent[parent.length - 1];
 
+    let path = '';
+
+    if (diskMode.active) {
+      path = 'api/v1/filesandfolders/?usr=' + currentUser.id;
+    } else {
+      path = 'api/v1/filesandfolders/';
+    }
+
     const { response } = await getFetchData(
-      'api/v1/filesandfolders/',
+      path,
       'POST',
       {
         name: 'Не важно что, все равно в Django переопределю',
         is_folder: true,
         parent: lastParent.id,
+        user: currentUser.id,
       });
     
     if (response.ok) {

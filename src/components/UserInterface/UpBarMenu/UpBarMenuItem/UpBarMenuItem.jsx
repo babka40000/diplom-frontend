@@ -7,6 +7,8 @@ import { getFetchData } from '../../../Lib/fetch';
 // Компонента - пункт в верхнем меню
 const UpBarMenuItem = props => {
   const filesAndFolders = useSelector(state => state.filesAndFolders)
+  const diskMode = useSelector(state => state.diskMode)
+  const currentUser = useSelector(state => state.isLogin)
   
   const dispatch = useDispatch();
 
@@ -19,9 +21,17 @@ const UpBarMenuItem = props => {
         let path = '';
 
         if (fileOrFolder.parent === null) {
-          path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/';
+          } 
         } else {
-          path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
+          if (diskMode.active) {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?usr=' + currentUser.id + '&parent=' + fileOrFolder.parent;
+          } else {
+            path = 'api/v1/filesandfolders/' + fileOrFolder.id + '/?parent=' + fileOrFolder.parent;
+          }
         }
 
         const { response } = await getFetchData(

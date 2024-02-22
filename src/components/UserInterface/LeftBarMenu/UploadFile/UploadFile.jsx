@@ -11,7 +11,9 @@ const UploadFile = () => {
 
   const inputRef = React.useRef(null);
 
-  const parent = useSelector(state => state.parent)
+  const parent = useSelector(state => state.parent);
+  const currentUser = useSelector(state => state.isLogin);
+  const diskMode = useSelector(state => state.diskMode);
 
   const [commentWindow, setCommentWindow] = useState(false);
   const [files, setFiles] = useState([]);
@@ -64,8 +66,15 @@ const UploadFile = () => {
       formData.append('file_size', file.size);
       formData.append('remark', event.target.comment.value);
 
+      let path = '';
+      if (diskMode.active) {
+        path = 'api/v1/filesandfolders/?usr=' + currentUser.id;
+      } else {
+        path = 'api/v1/filesandfolders/';
+      }
+
       const response = await getFetchData(
-        'api/v1/filesandfolders/',
+        path,
         'POST',
         formData,
       )
